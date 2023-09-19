@@ -95,13 +95,16 @@ jobs:
           asset_name: NewPipe_${{steps.tagger.outputs.new_tag}}.apk
           asset_content_type: application/zip
 
-      - name: "Update nightly F-Droid repo"
+      - name: "Checkout nightly repo"
         if: ${{ env.new_commit == 'true' }}
         uses: actions/checkout@v3
         with:
           fetch-depth: '0'
           ref: 'dev'
           token: ${{secrets.ACCESS_TOKEN}}
+
+      - name: "Update nightly F-Droid repo"
+        if: ${{ env.new_commit == 'true' }}
         run: |
           git checkout pages
           cp ${{ steps.sign_app.outputs.signedReleaseFile }} apks/NewPipe_${{steps.tagger.outputs.new_tag}}.apk
