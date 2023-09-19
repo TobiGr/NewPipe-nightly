@@ -4,7 +4,8 @@ on:
   schedule:
     - cron: '0 0 * * *'
   push:
-    - github_actions
+    branches:
+      - github_actions
   workflow_dispatch:
 permissions:
   contents: write
