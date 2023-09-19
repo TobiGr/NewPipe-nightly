@@ -135,4 +135,6 @@ jobs:
           commit_message: "Add Nightly ${{steps.tagger.outputs.new_tag}}"
           force: false
           target_branch: pages
+      - name: F-Droid repo permission clean-up # https://github.com/actions/cache/issues/753
+        run: sudo chown -R runner:docker fdroid
 
