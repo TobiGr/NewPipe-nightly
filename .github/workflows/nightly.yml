@@ -121,9 +121,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install apksigner fdroidserver --no-install-recommends
 
-      - name: "Add APK to fdroid nightly repo"
-        run: |
-          fdroid nightly --file new-signed-apk.apk
+      - name: F-Droid nightly builds
+        uses: wardvl/f-droid-nightly-action@v2
+        with:
+          debug_keystore: ${{ secrets.DEBUG_KEYSTORE }}
+          fdroid_nightly_args: --archive-older 10 --file new-signed-apk.apk --no-resign
 
       - name: "Update F-Droid nightly repo"
         if: ${{ env.new_commit == 'true' }}
