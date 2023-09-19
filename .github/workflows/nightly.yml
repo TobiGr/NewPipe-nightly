@@ -59,16 +59,16 @@ jobs:
           github_token: ${{secrets.ACCESS_TOKEN}}
           branch: dev
 
-      - name: "Sign release"
-        if: ${{ env.new_commit == 'true' }}
-        uses: r0adkll/sign-android-release@v1
-        id: sign_app
-        with:
-          releaseDirectory: app/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-          alias: ${{ secrets.ALIAS }}
-          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
+      #- name: "Sign release"
+      #  if: ${{ env.new_commit == 'true' }}
+      #  uses: r0adkll/sign-android-release@v1
+      #  id: sign_app
+      #  with:
+      #    releaseDirectory: app/build/outputs/apk/release
+      #    signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+      #    alias: ${{ secrets.ALIAS }}
+      #    keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+      #    keyPassword: ${{ secrets.KEY_PASSWORD }}
 
       - name: "Create GitHub release"
         if: ${{ env.new_commit == 'true' }}
