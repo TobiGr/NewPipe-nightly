@@ -95,7 +95,7 @@ jobs:
           asset_name: NewPipe_${{steps.tagger.outputs.new_tag}}.apk
           asset_content_type: application/zip
 
-      - name "Save APK for repo"
+      - name: "Save APK for repo"
         uses: actions/upload-artifact@master
         with:
           name: signed-apk
