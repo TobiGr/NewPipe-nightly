@@ -122,7 +122,7 @@ jobs:
           sudo apt-get install apksigner fdroidserver --no-install-recommends
 
       - name: F-Droid nightly builds
-        uses: wardvl/f-droid-nightly-action@v2
+        uses: wardvl/f-droid-nightly-action
         with:
           debug_keystore: ${{ secrets.DEBUG_KEYSTORE }}
           fdroid_nightly_args: --archive-older 10 --file new-signed-apk.apk --no-resign
