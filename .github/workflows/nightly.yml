@@ -115,23 +115,6 @@ jobs:
           name: signed-apk
           path: new-signed-apk.apk
 
-      - name: "Update F-Droid nightly reoi"
-        if: ${{ env.new_commit == 'true' }}
-        uses: devops-infra/action-commit-push@master
-        with:
-          github_token: "${{ secrets.ACCESS_TOKEN }}"
-          add_timestamp: true
-          commit_message: "Add Nightly ${{steps.tagger.outputs.new_tag}}"
-          force: false
-          target_branch: pages
-
-      - name: "Push APK to nightly repo"
-        if: ${{ env.new_commit == 'true' }}
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: ${{secrets.ACCESS_TOKEN}}
-          branch: pages
-
       - name: "Install fdroidserver tools"
         run: |
           sudo add-apt-repository ppa:fdroid/fdroidserver
@@ -140,4 +123,14 @@ jobs:
 
       - name: "Add APK to fdroid nightly repo"
         run: |
-          fdroid nightly --file new-signed-apk.apk 
+          fdroid nightly --file new-signed-apk.apk
+
+      - name: "Update F-Droid nightly repo"
+        if: ${{ env.new_commit == 'true' }}
+        uses: devops-infra/action-commit-push@master
+        with:
+          github_token: "${{ secrets.ACCESS_TOKEN }}"
+          commit_message: "Add Nightly ${{steps.tagger.outputs.new_tag}}"
+          force: false
+          target_branch: pages
+
