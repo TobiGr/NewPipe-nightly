@@ -122,10 +122,13 @@ jobs:
           sudo apt-get install apksigner fdroidserver --no-install-recommends
 
       - name: F-Droid nightly builds
-        uses: wardvl/f-droid-nightly-action
+        uses: wardvl/f-droid-nightly-action@master
         with:
           debug_keystore: ${{ secrets.DEBUG_KEYSTORE }}
           fdroid_nightly_args: --archive-older 10 --file new-signed-apk.apk --no-resign
+
+      - name: F-Droid repo permission clean-up # https://github.com/actions/cache/issues/753
+        run: sudo chown -R runner:docker fdroid
 
       - name: "Update F-Droid nightly repo"
         if: ${{ env.new_commit == 'true' }}
@@ -135,6 +138,4 @@ jobs:
           commit_message: "Add Nightly ${{steps.tagger.outputs.new_tag}}"
           force: false
           target_branch: pages
-      - name: F-Droid repo permission clean-up # https://github.com/actions/cache/issues/753
-        run: sudo chown -R runner:docker fdroid
 
